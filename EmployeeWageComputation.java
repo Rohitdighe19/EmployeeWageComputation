@@ -1,41 +1,34 @@
-/* Calculate Wages till a condition of total working hours or days is reached for a month
- * Total working Hours = 100
- * Working Hour Full Time = 8
- * Working Hour Part Time = 4
- * Wage Per Hour = 20
- * Number of Days = 20
-
- */
-
 public class EmployeeWageComputation {
-    public static final int absent = 0;
-    public static final int fullTime = 1;
-    public static final int partTime = 2;
-    public static final int no_of_days = 20;
-    public static final int empWagePerHour = 20;
-    public static final int hours_in_month = 100;
+    // Constants.
+    public static final int FULL_TIME = 1;
+    public static final int PART_TIME = 2;
+    public static final int WAGE_PER_HOUR = 20;
+    public static final int DAYS_PER_MONTH = 20;
+    public static final int MAX_WORK_HOURS = 100;
 
-    public static void main(String args[]) {
-        int empHour = 0;
-        int totalWorkingHours = 0;
-        for (int i = 1; i <= no_of_days; i++) {
-            int empCheck = (int) (Math.floor(Math.random() * 10)) % 3;
-            switch (empCheck) {
-                case absent:
-                    empHour = 0;
-                    break;
-                case fullTime:
-                    empHour = 8;
-                    break;
-                case partTime:
-                    empHour = 4;
-                    break;
-            }
-            totalWorkingHours += empHour;
-            if (totalWorkingHours >= hours_in_month)
-                break;
+    // Printing welcome statement.
+    void greet() {      // Printing welcome statement.
+        System.out.println("Welcome to employee wage computation.");
+    }
+    // Calculating employee wage
+    void empWage() {
+        int empHours,totalHours = 0, workingDays = 0;           // Variables
+        while (workingDays <= DAYS_PER_MONTH && totalHours <= MAX_WORK_HOURS) {
+            int empCheck = (int) (Math.floor(Math.random() * 10)) % 3;          //Using random for generating employee attendance.
+            empHours = switch (empCheck) {          //Using switch to simulate full time, part time or absent.
+                case FULL_TIME -> 8;        // If full time then empHrs = 8.
+                case PART_TIME -> 4;        // If part time then empHrs = 4.
+                default -> 0;               // if absent then empHrs = 0.
+            };
+            totalHours = totalHours + empHours;     // Calculating total working hours.
+            workingDays++;
         }
-        int totalEmpWage = (empWagePerHour * totalWorkingHours);
-        System.out.println("Wages per month of the employee is : Rs." + totalEmpWage);
+        int dailyWage = totalHours * WAGE_PER_HOUR;     // Calculating daily wage.
+        System.out.println("Employee wage is "+dailyWage);
+    }
+    public static void main(String[] args) {
+        EmployeeWageComputation Employee = new EmployeeWageComputation();     // Creating object named Employee.
+        Employee.greet();           // Calling greet method.
+        Employee.empWage();         // Calling empWage method.
     }
 }
